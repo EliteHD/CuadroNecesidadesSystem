@@ -1,0 +1,56 @@
+.btn__blue,
+.btn__blue:hover,
+.btn__blue:focus {
+    border-radius: 5px !important;
+    background-color: #0092CA !important;
+    color: #fff;
+    border: #0092CA solid 1px;
+    padding: 0 1rem;
+}
+
+.btn__pinkConfirm,
+.btn__pinkConfirm:hover,
+.btn__pinkConfirm:focus {
+    border-radius: 0.2px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #FF395C;
+    background: #FF395C;
+    font-size: 0.75rem;
+    padding: 1.1rem 1.1rem;
+    text-align: center;
+    justify-content: center;
+    & svg {
+        width: 0.75rem;
+    }
+    width: 100%;
+}
+
+.btn__gray,
+.btn__gray:hover,
+.btn__gray:focus {
+    border-radius: 6px !important;
+    background-color: #5D5D5D !important;
+    color: #fff;
+    border: #5D5D5D solid 1px;
+    padding: 0 1rem;
+}
+
+.btn-application,
+.btn-application:hover,
+.btn-application:focus {
+    border-radius: 4px;
+    color: #5D5D5D;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #5D5D5D;
+    background: transparent;
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    & svg {
+        width: 0.75rem;
+    }
+}
