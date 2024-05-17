@@ -22,7 +22,7 @@ export function Auth() {
     },
     {
       name: "sign up",
-      path: "/auth/sign-up",
+      path: "/auth/sign-in",
       icon: UserPlusIcon,
     },
     {

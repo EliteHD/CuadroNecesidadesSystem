@@ -64,7 +64,7 @@ export const routes = [
       {
         icon: <RectangleStackIcon {...icon} />,
         name: "sign up",
-        path: "/sign-up",
+        path: "/sign-in",
         element: <SignUp />,
       },
     ],
