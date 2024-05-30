@@ -15,7 +15,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-gray-800 to-gray-900",
     white: "bg-white shadow-sm",
-    transparent: "bg-transparent",
+    transparent: "bg-gradient-to-br from-red-700 to-red-800",
   };
 
   return (
@@ -28,11 +28,11 @@ export function Sidenav({ brandImg, brandName, routes }) {
         className={`relative`}
       >
         <Link to="/" className="py-6 px-8 text-center">
+        <img src={brandImg} size="XS" />
           <Typography
             variant="h6"
             color={sidenavType === "dark" ? "white" : "blue-gray"}
           >
-            {brandName}
           </Typography>
         </Link>
         <IconButton
@@ -96,8 +96,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
 }
 
 Sidenav.defaultProps = {
-  brandImg: "/img/logo-ct.png",
-  brandName: "Cuadro de Necesidades"
+  brandImg: "/img/SIRMEsinfondo.png",
+  brandName: "Cuadro de Necesidadesss"
 };
 
 Sidenav.propTypes = {

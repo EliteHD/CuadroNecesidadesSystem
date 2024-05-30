@@ -26,16 +26,23 @@ export const routes = [
       
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "tables",
+        name: "Materiales",
         path: "/tables",
         element: <Tables />,
       },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "Roles",
+        path: "/tables2",
+        element: <Tables />,
+      },
+      /*
       {
         icon: <InformationCircleIcon {...icon} />,
         name: "notifications",
         path: "/notifications",
         element: <Notifications />,
-      },
+      },*/
       {
         icon: <TableCellsIcon {...icon} />,
         name: "Usuarios",
@@ -50,6 +57,7 @@ export const routes = [
       },
     ],
   },
+  /*
   {
     title: "auth pages",
     layout: "auth",
@@ -68,7 +76,7 @@ export const routes = [
         element: <SignUp />,
       },
     ],
-  },
+  },*/
 ];
 
 export default routes;
