@@ -21,7 +21,7 @@ exports.createArticulo = async (req, res) => {
 // GET: Listar todos los artículos
 exports.getAllArticulos = async (req, res) => {
     try {
-        const articulos = await Articulo.find().populate('id_partidas').populate('id_institucion');
+        const articulos = await Articulo.find();
         res.status(200).send(articulos);
     } catch (error) {
         res.status(500).send(error);

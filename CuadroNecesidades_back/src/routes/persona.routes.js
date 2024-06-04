@@ -12,14 +12,14 @@ const {
 const validatorSchema = require('../middleware/validator.middleware');
 const personaSchema  = require('../schemas/persona.schema');
 
-router.get('/personas', authRequired, getPersonas);
+router.get('/personas', getPersonas);
 
-router.get('/personas/:id', authRequired, getPersona);
+router.get('/personas/:id', getPersona);
 
-router.post('/personas', authRequired, validatorSchema(personaSchema), createPersona);
+router.post('/personas', validatorSchema(personaSchema), createPersona);
 
-router.delete('/personas/:id', authRequired, deletePersona);
+router.delete('/personas/:id', deletePersona);
 
-router.put('/personas/:id', authRequired, updatePersona);
+router.put('/personas/:id', updatePersona);
 
 module.exports = router;

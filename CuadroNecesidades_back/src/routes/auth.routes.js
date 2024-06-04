@@ -6,13 +6,13 @@ const validatorSchema = require('../middleware/validator.middleware');
 const { loginSchema, registerSchema } = require('../schemas/auth.schema');
 
 
-router.post('/register', validatorSchema(registerSchema), register);
+router.post('/register', register);
 
-router.post('/login', validatorSchema(loginSchema), login);
+router.post('/login',  login);
 
 router.post('/logout', logout);
 
-router.get('/profile', authRequired, profile);
+router.get('/profile', profile);
 
 module.exports = router;
 
