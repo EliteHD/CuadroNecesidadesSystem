@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 
 const personasRoutes = require('./routes/persona.routes');
 const articulosRoutes = require('./routes/articulos.routes');
+const pedidosRoutes = require('./routes/pedidos.routes');
 
 // configuramos origin: http: // localhost: 9595.
 var corsOptions = {
@@ -51,6 +52,6 @@ db.sequelize.sync({ force: false }).then(() => {
 app.use('/api/auth', authRoutes);
 app.use('/api/people', personasRoutes);
 app.use('/api/articulos', articulosRoutes);
-
+app.use('/api/pedidos', pedidosRoutes)
 
 module.exports = app;

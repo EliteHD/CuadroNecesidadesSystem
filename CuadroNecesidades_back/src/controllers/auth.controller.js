@@ -87,6 +87,7 @@ const login = async (req, res) => {
         res.status(500).json({ error: 'Error al loguear usuario' });
     }
 }
+
 const logout = (req, res) => { 
     res.clearCookie('token');
     res.json({ msg: 'Logout exitoso' });
@@ -107,5 +108,53 @@ const profile = async (req, res) => {
     res.send('Profile'); 
 }
 
-module.exports = { register, login, logout, profile };
+const registerFirebase = async (req, res) => {
+    const { email, username } = req.body;
+
+    try {
+        const newUser = new User({
+            email,
+            username
+        });
+
+        const savedUser = await newUser.save();
+
+        res.json({
+            id: savedUser._id,
+            email: savedUser.email,
+            username: savedUser.username,
+            createdAt: savedUser.createdAt,
+            updatedAt: savedUser.updatedAt
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al registrar usuario' });
+    }
+}
+
+const loginFirebase = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ msg: 'Usuario no existe' });
+        }
+
+        res.json({
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al loguear usuario' });
+    }
+}
+
+
+
+module.exports = { register, login, logout, profile, registerFirebase, loginFirebase };
+
 
