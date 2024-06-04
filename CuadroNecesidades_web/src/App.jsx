@@ -1,13 +1,45 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Dashboard, Auth } from "@/layouts";
+import PageRouter from "./router/PageRouter";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthContext } from "./context/AuthContext";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "@services/api";
 
 function App() {
+  const [Auth, setAuth] = useState(null);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
+  useEffect(() => {
+    const storedAuth = localStorage.getItem("auth");
+    if (storedAuth) {
+      const authJSON = JSON.parse(storedAuth);
+      setAuth(authJSON);
+      console.log(authJSON.token)
+      axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + authJSON.token;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (Auth) {
+      localStorage.setItem("auth", JSON.stringify(Auth));
+    } else {
+      localStorage.removeItem("auth");
+    }
+  }, [Auth]);
+
   return (
-    <Routes>
-      <Route path="/dashboard/*" element={<Dashboard />} />
-      <Route path="/auth/*" element={<Auth />} />
-      <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
-    </Routes>
+    <QueryClientProvider client={queryClient}>
+      <AuthContext.Provider value={{ Auth, setAuth }}>
+        <PageRouter />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </AuthContext.Provider>
+    </QueryClientProvider>
   );
 }
 
