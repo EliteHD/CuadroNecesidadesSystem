@@ -17,16 +17,7 @@ const articuloSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    id_partidas: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Partida',  
-        required: true
-    },
-    id_institucion: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Institucion',  
-        required: true
-    }
+
 }, {
     timestamps: true
 });

@@ -9,6 +9,7 @@ import MainNecesidades from "@pages/dashboard/cuadronecesidades/MainNecesidades"
 import MainUsuarios from "@pages/dashboard/usuarios/MainUsuarios";
 import MainInventario from "@pages/dashboard/Inventario/MainInventario";
 import MainArticulos from "@pages/dashboard/articulos/MainArticulos";
+import CreateArticuloForm from "@pages/dashboard/Inventario/CreateArticuloForm";
 
 export default function DashboardRouter() {
   return (
@@ -16,6 +17,7 @@ export default function DashboardRouter() {
       <Route index element={<DashboardMain />} />
       <Route path="/Users" element={<MainUsuarios />} />
       <Route path="/Inventario" element={<MainInventario />} />
+      <Route path="/AddArticulo" element={<CreateArticuloForm />} />
       <Route path="/CuadroNecesidades" element={<MainNecesidades />} />
       <Route path="/Roles" element={<DashboardRoles />} />
       <Route path="/Articulos" element={<MainArticulos />} />
