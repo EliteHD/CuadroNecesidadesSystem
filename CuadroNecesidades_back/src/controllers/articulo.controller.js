@@ -7,10 +7,8 @@ exports.createArticulo = async (req, res) => {
             descripcion_articulo: req.body.descripcion_articulo,
             precioUnitario: req.body.precioUnitario,
             unidadMedida: req.body.unidadMedida,
-            id_partidas: req.body.id_partidas,
-            id_institucion: req.body.id_institucion
         });
-        
+
         await newArticulo.save();
         res.status(201).send(newArticulo);
     } catch (error) {
