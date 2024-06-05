@@ -153,8 +153,74 @@ const loginFirebase = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { email, username } = req.body;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(id, { email, username }, { new: true, runValidators: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.json({
+            id: updatedUser._id,
+            email: updatedUser.email,
+            username: updatedUser.username,
+            createdAt: updatedUser.createdAt,
+            updatedAt: updatedUser.updatedAt
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al actualizar el usuario' });
+    }
+}
+
+const deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletedUser = await User.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.json({ message: 'Usuario eliminado con éxito' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al eliminar el usuario' });
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});  // Encuentra todos los documentos en la colección de usuarios
+
+        // Si deseas devolver un arreglo vacío cuando no hay usuarios, simplemente envía 'users'
+        if (!users.length) {
+            return res.status(404).json({ message: 'No se encontraron usuarios' });
+        }
+
+        // Transforma la lista de usuarios si es necesario, o envía directamente
+        const userList = users.map(user => ({
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        }));
+
+        res.status(200).json(userList);
+    } catch (error) {
+        console.error("Error al obtener los usuarios:", error);
+        res.status(500).json({ error: 'Error al obtener los usuarios', message: error.message });
+    }
+};
 
 
-module.exports = { register, login, logout, profile, registerFirebase, loginFirebase };
+
+module.exports = { register, getAllUsers, updateUser, deleteUser, login, logout, profile, registerFirebase, loginFirebase };
 
 

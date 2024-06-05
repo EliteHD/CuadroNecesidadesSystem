@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { login, register, logout, profile, registerFirebase, loginFirebase } = require('../controllers/auth.controller');
+const { login, getAllUsers, updateUser, register, logout, profile, registerFirebase, loginFirebase, deleteUser } = require('../controllers/auth.controller');
 const router = Router();
 const authRequired = require('../middleware/validateToken');
 const validatorSchema = require('../middleware/validator.middleware');
@@ -17,6 +17,12 @@ router.get('/profile', profile);
 router.post('/registerFirebase', registerFirebase);
 
 router.post('/loginFirebase', loginFirebase);
+
+router.put('/editUser',  updateUser);
+
+router.delete('/deleteUser',  deleteUser);
+
+router.get('/getAllUsers',  getAllUsers);
 
 module.exports = router;
 
