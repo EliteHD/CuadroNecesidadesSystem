@@ -29,7 +29,7 @@ exports.getAllArticulos = async (req, res) => {
 // GET: Obtener un artículo por ID
 exports.getArticuloById = async (req, res) => {
     try {
-        const articulo = await Articulo.findById(req.params.id).populate('id_partidas').populate('id_institucion');
+        const articulo = await Articulo.findById(req.params.id);
         if (!articulo) {
             return res.status(404).send();
         }
@@ -38,6 +38,7 @@ exports.getArticuloById = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
 
 // PUT: Actualizar un artículo
 exports.updateArticulo = async (req, res) => {

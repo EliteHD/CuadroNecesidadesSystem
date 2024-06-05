@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Table, Pagination, Dropdown, Col, Row, Form, DatePicker } from 'antd';
-import bannerCbtis from '@assets/images/logos/bannercbtis.png';
-import { Select, Space } from 'antd';
-import FormItemLabel from 'antd/es/form/FormItemLabel';
-import axios from 'axios'; // Importa axios
+import { Layout, Table, Col, Row } from 'antd';
+import axios from 'axios';
 import { SERVER_HOST } from '../../../../serverHost';
 
 function MainNecesidades() {
     const { Content, Header } = Layout;
-    const [articulos, setArticulos] = useState([]);
+    const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
-        obtenerArticulos();
+        obtenerPedidos();
     }, []);
 
-    const obtenerArticulos = async () => {
+    const obtenerPedidos = async () => {
         try {
-            const response = await axios.get(`${SERVER_HOST}/api/articulos/articulos`);
+            const response = await axios.get(`${SERVER_HOST}/api/pedidos/pedidos`);
             if (response.data) {
-                setArticulos(response.data);
+                setPedidos(response.data);
             }
         } catch (error) {
-            console.error('Error al obtener los artículos:', error.message);
+            console.error('Error al obtener los pedidos:', error.message);
         }
     };
 
@@ -58,23 +55,35 @@ function MainNecesidades() {
 
                 <Row className="w-full">
                     <Col span={24}>
-                        <label className="text-lg mb-6 font-bold">Cuadro de Necesidades</label>
+                        <label className="text-lg mb-6 font-bold">Pedidos y Artículos</label>
                         <Table
                             columns={[
                                 {
                                     title: 'Nombre',
-                                    dataIndex: 'nombre_articulo',
-                                    key: 'nombre_articulo',
+                                    dataIndex: 'nombre',
+                                    key: 'nombre',
                                 },
-
                                 {
-                                    title: 'Articulo',
-                                    dataIndex: 'descripcion_articulo',
-                                    key: 'descripcion_articulo',
+                                    title: 'Correo',
+                                    dataIndex: 'correo',
+                                    key: 'correo',
                                 },
-                                
+                                {
+                                    title: 'Artículos',
+                                    dataIndex: 'articulos',
+                                    key: 'articulos',
+                                    render: articulos => (
+                                        <ul>
+                                            {articulos.map(articulo => (
+                                                <li key={articulo._id}>
+                                                    {articulo.nombre_articulo} - {articulo.descripcion_articulo}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ),
+                                },
                             ]}
-                            dataSource={articulos}
+                            dataSource={pedidos}
                         />
                     </Col>
                 </Row>

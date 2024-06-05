@@ -1,19 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
 import axios from 'axios';
 import { SERVER_HOST } from '../../../../serverHost';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CreateArticuloForm() {
     const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
+    const { id } = useParams();
+    const navigate = useNavigate();
 
+    // Obtener datos del artículo si estamos en modo edición
+    useEffect(() => {
+        if (id) {
+            fetchArticulo(id);
+        }
+    }, [id]);
+
+    // Función para obtener el artículo y prellenar el formulario
+    const fetchArticulo = async (id) => {
+        console.log('##################### ID', id);
+        try {
+            const response = await axios.get(`${SERVER_HOST}/api/articulos/articulos/${id}`);
+            form.setFieldsValue(response.data); // Prellenar el formulario con los datos del artículo
+        } catch (error) {
+            console.error('Error al obtener el artículo:', error.message);
+        }
+    };
+
+    // Función para manejar el submit del formulario
     const onFinish = async (values) => {
         setLoading(true);
         try {
-            await axios.post(`${SERVER_HOST}/api/articulos/articulos`, values);
-            message.success('Artículo creado exitosamente');
+            if (id) {
+                // Actualizar artículo existente
+                await axios.put(`${SERVER_HOST}/api/articulos/articulos/${id}`, values);
+                message.success('Artículo actualizado exitosamente');
+            } else {
+                // Crear nuevo artículo
+                await axios.post(`${SERVER_HOST}/api/articulos/articulos`, values);
+                message.success('Artículo creado exitosamente');
+            }
+            navigate('/Dashboard');
         } catch (error) {
-            console.error('Error al crear el artículo:', error.message);
-            message.error('Error al crear el artículo');
+            console.error('Error al guardar el artículo:', error.message);
+            message.error('Error al guardar el artículo');
         }
         setLoading(false);
     };
@@ -24,11 +55,10 @@ function CreateArticuloForm() {
 
     const { Content, Header } = Layout;
 
-
     return (
-        <Layout className="flex-1 flex h-full bg-white ">
+        <Layout className="flex-1 flex h-full bg-white">
             <div
-                className="p-2.5  w-full bg-white"
+                className="p-2.5 w-full bg-white"
                 style={{
                     position: 'sticky',
                     top: 0,
@@ -38,16 +68,16 @@ function CreateArticuloForm() {
                     alignItems: 'center',
                 }}
             >
-                <Header className=" w-full bg-cbtisbrow shadow-md rounded-2xl backdrop:blur-xl backdrop-filter bg-opacity-95">
+                <Header className="w-full bg-cbtisbrow shadow-md rounded-2xl backdrop:blur-xl backdrop-filter bg-opacity-95">
                     <div>
-                        <span className="text-white text-2xl font-bold">Agregar un articulo al inventario </span>
+                        <span className="text-white text-2xl font-bold">{id ? 'Editar artículo' : 'Agregar un artículo al inventario'}</span>
                     </div>
                 </Header>
             </div>
 
             <div className='p-8'>
-
                 <Form
+                    form={form}
                     name="createArticuloForm"
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -87,12 +117,11 @@ function CreateArticuloForm() {
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" loading={loading}>
-                            Crear Artículo
+                            {id ? 'Actualizar Artículo' : 'Crear Artículo'}
                         </Button>
                     </Form.Item>
                 </Form>
             </div>
-
         </Layout>
     );
 }

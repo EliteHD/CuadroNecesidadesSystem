@@ -18,6 +18,8 @@ export default function DashboardRouter() {
       <Route path="/Users" element={<MainUsuarios />} />
       <Route path="/Inventario" element={<MainInventario />} />
       <Route path="/AddArticulo" element={<CreateArticuloForm />} />
+      <Route path="/editArticulo/:id" element={<CreateArticuloForm />} />
+
       <Route path="/CuadroNecesidades" element={<MainNecesidades />} />
       <Route path="/Roles" element={<DashboardRoles />} />
       <Route path="/Articulos" element={<MainArticulos />} />
