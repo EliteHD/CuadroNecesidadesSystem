@@ -16,10 +16,18 @@ exports.createPedido = async (req, res) => {
 // Obtener todos los pedidos
 exports.getAllPedidos = async (req, res) => {
     try {
-        const pedidos = await Pedido.find().populate('articulos');
-        res.status(200).json(pedidos);
+        const pedidos = await Pedido.find().populate({
+            path: 'articulos',
+            select: 'nombre_articulo precioUnitario descripcion' 
+        });
+        if (pedidos.length > 0) {
+            res.status(200).json(pedidos);
+        } else {
+            res.status(404).json({ message: 'No se encontraron pedidos' });
+        }
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los pedidos', message: error.message });
+        console.error("Error al obtener los pedidos:", error);
+        res.status(500).json({ message: 'Error al obtener los pedidos', error: error.message });
     }
 };
 
