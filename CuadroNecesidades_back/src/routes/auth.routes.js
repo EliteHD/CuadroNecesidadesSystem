@@ -18,9 +18,9 @@ router.post('/registerFirebase', registerFirebase);
 
 router.post('/loginFirebase', loginFirebase);
 
-router.put('/editUser',  updateUser);
+router.put('/editUser/:id',  updateUser);
 
-router.delete('/deleteUser',  deleteUser);
+router.delete('/deleteUser/:id',  deleteUser);
 
 router.get('/getAllUsers',  getAllUsers);
 
