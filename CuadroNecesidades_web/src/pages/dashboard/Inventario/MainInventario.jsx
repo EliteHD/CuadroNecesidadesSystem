@@ -18,7 +18,6 @@ function MainInventario() {
         try {
             const response = await axios.get(`${SERVER_HOST}/api/articulos/articulos`);
             if (response.data) {
-                // Asegúrate de que cada artículo tenga una propiedad `key` única
                 const articulosConKey = response.data.map(articulo => ({
                     ...articulo,
                     key: articulo.id, // Usa el id del artículo como la clave

@@ -39,7 +39,7 @@ const register = async (req, res) => {
             }
         )
 
-       
+
     }
     catch (err) {
         console.error(err);
@@ -79,16 +79,17 @@ const login = async (req, res) => {
                         updatedAt: user.updatedAt
                     }
                 )
-                
+
             }
-        )   }
+        )
+    }
     catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error al loguear usuario' });
     }
 }
 
-const logout = (req, res) => { 
+const logout = (req, res) => {
     res.clearCookie('token');
     res.json({ msg: 'Logout exitoso' });
     return res.status(200);
@@ -96,7 +97,7 @@ const logout = (req, res) => {
 const profile = async (req, res) => {
     const user = await User.findById(req.user.id);
 
-    if(!user) return res.status(404).json({msg: 'Usuario no encontrado'});
+    if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' });
 
     return res.json({
         id: user._id,
@@ -105,7 +106,7 @@ const profile = async (req, res) => {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
     });
-    res.send('Profile'); 
+    res.send('Profile');
 }
 
 const registerFirebase = async (req, res) => {
@@ -168,8 +169,6 @@ const updateUser = async (req, res) => {
             id: updatedUser._id,
             email: updatedUser.email,
             username: updatedUser.username,
-            createdAt: updatedUser.createdAt,
-            updatedAt: updatedUser.updatedAt
         });
     } catch (err) {
         console.error(err);
@@ -196,31 +195,32 @@ const deleteUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({});  // Encuentra todos los documentos en la colección de usuarios
-
-        // Si deseas devolver un arreglo vacío cuando no hay usuarios, simplemente envía 'users'
-        if (!users.length) {
-            return res.status(404).json({ message: 'No se encontraron usuarios' });
-        }
-
-        // Transforma la lista de usuarios si es necesario, o envía directamente
-        const userList = users.map(user => ({
-            id: user._id,
-            email: user.email,
-            username: user.username,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt
-        }));
-
-        res.status(200).json(userList);
-    } catch (error) {
-        console.error("Error al obtener los usuarios:", error);
-        res.status(500).json({ error: 'Error al obtener los usuarios', message: error.message });
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al obtener los usuarios' });
     }
-};
+}
+
+
+const getUserById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findById(id);
+        res.json(user);
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al obtener el usuario' });
+    }
+}
 
 
 
-module.exports = { register, getAllUsers, updateUser, deleteUser, login, logout, profile, registerFirebase, loginFirebase };
+
+
+
+module.exports = { register, getAllUsers, updateUser, deleteUser, login, logout, profile, registerFirebase, loginFirebase, getUserById };
 
 

@@ -10,12 +10,14 @@ import MainUsuarios from "@pages/dashboard/usuarios/MainUsuarios";
 import MainInventario from "@pages/dashboard/Inventario/MainInventario";
 import MainArticulos from "@pages/dashboard/articulos/MainArticulos";
 import CreateArticuloForm from "@pages/dashboard/Inventario/CreateArticuloForm";
+import CreateUsuarioForm from "@pages/dashboard/usuarios/CreateUsuarioForm";
 
 export default function DashboardRouter() {
   return (
     <Routes>
       <Route index element={<DashboardMain />} />
       <Route path="/Users" element={<MainUsuarios />} />
+      <Route path="/editUsuario/:id" element={<CreateUsuarioForm />} />
       <Route path="/Inventario" element={<MainInventario />} />
       <Route path="/AddArticulo" element={<CreateArticuloForm />} />
       <Route path="/editArticulo/:id" element={<CreateArticuloForm />} />
