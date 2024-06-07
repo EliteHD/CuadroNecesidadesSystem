@@ -1,0 +1,15 @@
+node_modules/
+node_modules/*
+#git ignore 
+#npm ignore
+#npmrc
+#npm-debug.log
+
+
+#npm package
+package-lock.json
+node_modules/
+node_modules/*
+#git ignore
+
+#npm ignore
